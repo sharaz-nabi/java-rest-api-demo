@@ -37,7 +37,7 @@ public class ProductController {
 	}
 
 	@PostMapping(value = "/response/sms")
-	public List<String> putSmsResponse(@RequestBody Object request) {
+	public List<String> putSmsResponse(Object request) {
 
 		System.out.println("Request Data ::" + request);
 
