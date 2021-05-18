@@ -1,21 +1,48 @@
 package com.javatpoint;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 @RestController
-public class ProductController 
-{
-@Autowired
-private IProductService productService;
-//mapping the getProduct() method to /product
-@GetMapping(value = "/product")
-public List<Product> getProduct() 
-{
-//finds all the products
-List<Product> products = productService.findAll();
-//returns the product list
-return products;
-}
+public class ProductController {
+	@Autowired
+	private IProductService productService;
+
+	private List<String> response = new ArrayList<>();
+
+	@PostConstruct
+	void init() {
+		response.add("test 1");
+		response.add("test 2");
+		response.add("test 3");
+	}
+
+	@GetMapping(value = "/product")
+	public List<Product> getProduct() {
+		List<Product> products = productService.findAll();
+		return products;
+	}
+
+	@GetMapping(value = "/response/sms")
+	public List<String> getSmsResponse() {
+		return response;
+	}
+
+	@PostMapping(value = "/response/sms")
+	public List<String> putSmsResponse(@RequestBody Object request) {
+
+		System.out.println("Request Data ::" + request);
+
+		response.add(request.toString());
+
+		return response;
+	}
 }
