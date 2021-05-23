@@ -46,7 +46,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/response/sms")
-	public ResponseEntity<String> putSmsResponse(Object request) {
+	public String putSmsResponse(Object request) {
 
 	//	System.out.println("Request Data ::" + request);
 
@@ -54,14 +54,14 @@ public class ProductController {
 
 	//	System.out.println("Req Params :: " + new Gson().toJson(httpServletRequest.getParameterMap()));
 
-		response.add(new Gson().toJson(request));
+	//	response.add(new Gson().toJson(request));
 
-		//response.add(new Gson().toJson(httpServletRequest.getParameterMap()));
+		response.add(new Gson().toJson(httpServletRequest.getParameterMap()));
 
 		Message message = new Message.Builder("This is message 1 of 2.").build();
 		Message message2 = new Message.Builder("This is message 2 of 2.").build();
 		MessagingResponse response1 = new MessagingResponse.Builder().message(message).message(message2).build();
 
-		return new ResponseEntity<>("Message Success from : ", HttpStatus.OK);
+		return "Success";
 	}
 }
