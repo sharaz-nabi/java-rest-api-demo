@@ -8,10 +8,11 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ public class ProductController {
 	private IProductService productService;
 
 	private List<String> response = new ArrayList<>();
-	
+
 	@Autowired
 	HttpServletRequest httpServletRequest;
 
@@ -44,17 +45,17 @@ public class ProductController {
 		return response;
 	}
 
-	@PostMapping(value = "/response/sms")
-	public List<String> putSmsResponse(@RequestBody Map<String,String> request) {
+	@RequestMapping(value = "/response/sms")
+	public List<String> putSmsResponse(Object request) {
 
 		System.out.println("Request Data ::" + request);
-		
+
 		System.out.println("Req Params :: " + httpServletRequest.getParameterMap().size());
-		
+
 		System.out.println("Req Params :: " + new Gson().toJson(httpServletRequest.getParameterMap()));
 
 		response.add(new Gson().toJson(request));
-		
+
 		response.add(new Gson().toJson(httpServletRequest.getParameterMap()));
 
 		return response;
